@@ -22,11 +22,11 @@ public class SATSolver {
      * @return an environment for which the problem evaluates to Bool.TRUE, or
      *         null if no such environment exists.
      */
-    public static Environment solve(Formula formula) {
+    public static Environment solve(Formula formula) { //first call of solve()
         // TODO: implement this.
         ImList<Clause> clauses = formula.getClauses();
         Environment env = new Environment();
-        return solve(clauses, env);
+        return solve(clauses, env); //second call of solve(); recursion
     }
 
     /**
@@ -79,8 +79,8 @@ public class SATSolver {
             } else {
                 newEnv = env.putFalse(v);
             }
-            ImList<Clause> subClause =  substitute(clauses, l); //substitute for the variable in all the other clauses
-            return (solve(subClause, newEnv));                  //solve() recursively
+            ImList<Clause> subClauses =  substitute(clauses, l); //substitute for the variable in all the other clauses
+            return (solve(subClauses, newEnv));                  //solve() recursively
 
         }else{                                                      // Otherwise (if clause has >1 literal),
 
@@ -111,10 +111,13 @@ public class SATSolver {
      */
     private static ImList<Clause> substitute(ImList<Clause> clauses,Literal l) {
         // TODO: implement this.
-        ImList<Clause> newClause=new EmptyImList<>();
+        ImList<Clause> newClauses=new EmptyImList<>();
         for (Clause c : clauses){
-            Clause newC=c.reduce(l);
+            Clause newC=c.reduce(l); //clause obtained by setting literal to true or null if the entire clause becomes true
+            if (newC!=null){
+                newClauses=newClauses.add(newC);
+            }
         }
-        return null;
+        return newClauses;
     }
 }
