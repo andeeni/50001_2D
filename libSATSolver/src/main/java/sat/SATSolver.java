@@ -79,8 +79,8 @@ public class SATSolver {
             } else {
                 newEnv = env.putFalse(v);
             }
-            ImList<Clause> subClauses =  substitute(clauses, l); //substitute for the variable in all the other clauses
-            return (solve(subClauses, newEnv));                  //solve() recursively
+            ImList<Clause> subClauses =  substitute(clauses, l);    //substitute for the variable in all the other clauses
+            return (solve(subClauses, newEnv));                     //solve() recursively
 
         }else{                                                      // Otherwise (if clause has >1 literal),
 
