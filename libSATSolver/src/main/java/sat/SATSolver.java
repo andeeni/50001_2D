@@ -113,8 +113,8 @@ public class SATSolver {
         // TODO: implement this.
         ImList<Clause> newClauses=new EmptyImList<>();
         for (Clause c : clauses){
-            Clause newC=c.reduce(l); //clause obtained by setting literal to true or null if the entire clause becomes true
-            if (newC!=null){
+            Clause newC=c.reduce(l);    //parse through all clauses, change literal to true using reduce()
+            if (newC!=null){            //if new clause is not true, add to ImList
                 newClauses=newClauses.add(newC);
             }
         }

@@ -22,7 +22,9 @@ public class SATSolverTest {
 
 	
 	// TODO: add the main method that reads the .cnf file and calls SATSolver.solve to determine the satisfiability
-    
+    public static void main(String[] args) {
+        
+    }
 	
     public void testSATSolver1(){
     	// (a v b)
