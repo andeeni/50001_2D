@@ -1,0 +1,3 @@
+include ':libSATSolver'
+include ':app'
+rootProject.name = "50.001_2D"
