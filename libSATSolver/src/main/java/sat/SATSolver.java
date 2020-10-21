@@ -23,7 +23,6 @@ public class SATSolver {
      *         null if no such environment exists.
      */
     public static Environment solve(Formula formula) { //first call of solve()
-        // TODO: implement this.
         ImList<Clause> clauses = formula.getClauses();
         Environment env = new Environment();
         return solve(clauses, env); //second call of solve(); recursion
@@ -42,7 +41,6 @@ public class SATSolver {
      *         or null if no such environment exists.
      */
     private static Environment solve(ImList<Clause> clauses, Environment env) {
-        // TODO: implement this.
         // If there are no clauses, the formula is trivially satisfiable.
         if (clauses.isEmpty()){
             return env;
@@ -57,7 +55,7 @@ public class SATSolver {
             }
         }
         //Otherwise, find the smallest clause (by number of literals)
-        Clause smallestClause=clauses.first(); //init as first Clause
+        Clause smallestClause=clauses.first(); //initialise as first Clause
         for (Clause c: clauses){
             if (c.size()<smallestClause.size()){
                 smallestClause=c;
@@ -65,9 +63,8 @@ public class SATSolver {
         }
 
         /*
-
-        substitute for the variable in all the other clauses (using the suggested substitute() method),
-        and recursively call solve().
+        substitute for the variable in all the other clauses (using the
+        suggested substitute() method), and recursively call solve().
         */
         Literal l = smallestClause.chooseLiteral();                 //pick an arbitrary literal from smallestClause
         Variable v = l.getVariable();
@@ -84,17 +81,17 @@ public class SATSolver {
 
         }else{                                                      // Otherwise (if clause has >1 literal),
 
-            Environment envTrue = env.putTrue(v);                   //try setting the literal to TRUE
+            Environment tryTrue = env.putTrue(v);                   //try setting the literal to TRUE
             ImList<Clause> clausesTrue = substitute(clauses, l);    //substitute for it in all the clauses
-            Environment tryTrue=solve(clausesTrue,envTrue);         //solve() recursively
+            Environment envTrue=solve(clausesTrue,tryTrue);         //solve() recursively
 
-            if (tryTrue == null) {                                  // If that fails,
-                Environment envFalse = env.putFalse(v);             // then try setting the literal to FALSE
+            if (envTrue == null) {                                  // If that fails,
+                Environment tryFalse = env.putFalse(v);             // then try setting the literal to FALSE
                 ImList<Clause> clausesFalse = substitute(clauses, l.getNegation()); //substitute
-                Environment tryFalse = solve(clausesFalse, envFalse); //solve() recursively
-                return tryFalse;
+                Environment envFalse = solve(clausesFalse, tryFalse); //solve() recursively
+                return envFalse;
             } else{
-                return tryTrue;
+                return envTrue;
             }
         }
     }
@@ -110,7 +107,6 @@ public class SATSolver {
      * @return a new list of clauses resulting from setting l to true
      */
     private static ImList<Clause> substitute(ImList<Clause> clauses,Literal l) {
-        // TODO: implement this.
         ImList<Clause> newClauses=new EmptyImList<>();
         for (Clause c : clauses){
             Clause newC=c.reduce(l);    //parse through all clauses, change literal to true using reduce()
